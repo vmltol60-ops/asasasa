@@ -1,0 +1,385 @@
+[16.03.2026 2:07] OtecDamen⚫️🦅ジ ꘜ: <!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фоторедактор · стильный</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            padding: 30px;
+            transition: all 0.3s;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 2.2em;
+            letter-spacing: -0.5px;
+            background: linear-gradient(45deg, #5a67d8, #9f7aea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .upload-area {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .upload-label {
+            background: #edf2f7;
+            color: #2d3748;
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 2px dashed #cbd5e0;
+        }
+
+        .upload-label:hover {
+            background: #e2e8f0;
+            border-color: #9f7aea;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .canvas-wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            background: #f7fafc;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            background: #fff;
+        }
+
+        .controls-card {
+            background: white;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .slider-group label {
+            width: 120px;
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .slider-group input[type=range] {
+            flex: 1;
+            min-width: 200px;
+            height: 8px;
+            border-radius: 10px;
+            background: #e2e8f0;
+            -webkit-appearance: none;
+        }
+
+        .slider-group input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: 0.2s;
+            border: 2px solid white;
+        }
+
+        .slider-group input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        .slider-group span {
+            width: 50px;
+            text-align: right;
+[16.03.2026 2:07] OtecDamen⚫️🦅ジ ꘜ: font-weight: 600;
+            color: #2d3748;
+        }
+
+        .button-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        .btn {
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #edf2f7;
+            color: #2d3748;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            flex: 1 0 auto;
+            min-width: 110px;
+            border: 1px solid transparent;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px -10px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-reset {
+            background: #cbd5e0;
+            color: #1a202c;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* accent-color для совместимости */
+        input[type=range] {
+            accent-color: #667eea;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 20px;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Фоторедактор</h1>
+
+        <div class="upload-area">
+            <label for="fileInput" class="upload-label">📁 Выбрать изображение</label>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+
+        <div class="canvas-wrapper">
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <div class="controls-card">
+            <div class="slider-group">
+                <label for="brightness">Яркость</label>
+                <input type="range" id="brightness" min="0" max="200" value="100" step="1">
+                <span id="brightnessValue">100%</span>
+            </div>
+            <div class="slider-group">
+                <label for="contrast">Контраст</label>
+                <input type="range" id="contrast" min="0" max="200" value="100" step="1">
+                <span id="contrastValue">100%</span>
+            </div>
+            <div class="slider-group">
+                <label for="saturate">Насыщенность</label>
+                <input type="range" id="saturate" min="0" max="200" value="100" step="1">
+                <span id="saturateValue">100%</span>
+            </div>
+            <div class="slider-group">
+                <label for="blur">Размытие</label>
+                <input type="range" id="blur" min="0" max="10" value="0" step="0.1">
+                <span id="blurValue">0px</span>
+            </div>
+
+            <div class="button-grid">
+                <button class="btn btn-primary" id="grayscale">🌫️ Ч/Б</button>
+                <button class="btn btn-primary" id="sepia">🟫 Сепия</button>
+                <button class="btn btn-primary" id="invert">🔲 Инверсия</button>
+                <button class="btn btn-reset" id="reset">🔄 Сбросить</button>
+                <button class="btn btn-download" id="download">⬇️ Скачать</button>
+            </div>
+        </div>
+        <div class="footer-note">
+            Перетащите ползунки или нажмите кнопки эффектов
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const brightness = document.getElementById('brightness');
+        const contrast = document.getElementById('contrast');
+        const saturate = document.getElementById('saturate');
+        const blur = document.getElementById('blur');
+[16.03.2026 2:07] OtecDamen⚫️🦅ジ ꘜ: const brightnessValue = document.getElementById('brightnessValue');
+        const contrastValue = document.getElementById('contrastValue');
+        const saturateValue = document.getElementById('saturateValue');
+        const blurValue = document.getElementById('blurValue');
+
+        const grayscaleBtn = document.getElementById('grayscale');
+        const sepiaBtn = document.getElementById('sepia');
+        const invertBtn = document.getElementById('invert');
+        const resetBtn = document.getElementById('reset');
+        const downloadBtn = document.getElementById('download');
+
+        let originalImg = null;
+        let extraFilter = ''; // для дополнительных эффектов grayscale, sepia, invert
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    const maxWidth = 600;
+                    const scale = Math.min(maxWidth / img.width, 1);
+                    canvas.width = img.width * scale;
+                    canvas.height = img.height * scale;
+
+                    originalImg = img;
+
+                    ctx.filter = 'none';
+                    ctx.drawImage(originalImg, 0, 0, canvas.width, canvas.height);
+
+                    resetSliders();
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function applyFilter() {
+            if (!originalImg) return;
+
+            const b = brightness.value / 100;
+            const c = contrast.value / 100;
+            const s = saturate.value / 100;
+            const bl = blur.value;
+
+            brightnessValue.textContent = brightness.value + '%';
+            contrastValue.textContent = contrast.value + '%';
+            saturateValue.textContent = saturate.value + '%';
+            blurValue.textContent = bl + 'px';
+
+            let filterString = brightness(${b}) contrast(${c}) saturate(${s}) blur(${bl}px);
+            if (extraFilter) {
+                filterString += ' ' + extraFilter;
+            }
+
+            ctx.filter = filterString;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(originalImg, 0, 0, canvas.width, canvas.height);
+        }
+
+        function resetSliders() {
+            brightness.value = 100;
+            contrast.value = 100;
+            saturate.value = 100;
+            blur.value = 0;
+            extraFilter = '';
+            applyFilter();
+        }
+
+        brightness.addEventListener('input', applyFilter);
+        contrast.addEventListener('input', applyFilter);
+        saturate.addEventListener('input', applyFilter);
+        blur.addEventListener('input', applyFilter);
+
+        grayscaleBtn.addEventListener('click', () => {
+            extraFilter = 'grayscale(1)';
+            brightness.value = 100;
+            contrast.value = 100;
+            saturate.value = 100;
+            blur.value = 0;
+            applyFilter();
+        });
+
+        sepiaBtn.addEventListener('click', () => {
+            extraFilter = 'sepia(1)';
+            brightness.value = 100;
+            contrast.value = 100;
+            saturate.value = 100;
+            blur.value = 0;
+            applyFilter();
+        });
+
+        invertBtn.addEventListener('click', () => {
+            extraFilter = 'invert(1)';
+            brightness.value = 100;
+            contrast.value = 100;
+            saturate.value = 100;
+            blur.value = 0;
+            applyFilter();
+        });
+
+        resetBtn.addEventListener('click', () => {
+            resetSliders();
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            if (!originalImg) return;
+            const link = document.createElement('a');
+            link.download = 'edited-image.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+    </script>
+</body>
+</html>
